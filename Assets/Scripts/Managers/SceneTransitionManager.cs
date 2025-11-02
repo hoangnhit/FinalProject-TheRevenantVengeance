@@ -44,7 +44,7 @@ public class SceneTransitionManager : MonoBehaviour
         // Reassign fadeCanvasGroup if needed (in case it gets lost between scenes)
         if (fadeCanvasGroup == null)
         {
-            fadeCanvasGroup = FindObjectOfType<CanvasGroup>();
+            fadeCanvasGroup = FindFirstObjectByType<CanvasGroup>();
             if (fadeCanvasGroup != null)
                 Debug.Log("fadeCanvasGroup reassigned successfully.");
             else

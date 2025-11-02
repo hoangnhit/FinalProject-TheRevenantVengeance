@@ -22,26 +22,23 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] public int maxExp = 10;
     public float currentExp;
-    //[SerializeField] private Image expBar;
     [SerializeField] public int level = 1;
 
     [SerializeField] private GameManager gameManager;
     [SerializeField] public AttackDetector attackDetector;
 
-    private GameObject fireballPrefab;  // Prefab quả cầu (sẽ gán khi nhặt item)
-    public Transform fireballSpawnPoint;  // Điểm bắn quả cầu (thường là 1 empty object ở tay hoặc trước mặt)
+    private GameObject fireballPrefab;
+    public Transform fireballSpawnPoint;
     public float fireballSpeed = 10f;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
-    [SerializeField] private GameObject auraPrefab;  // Gán prefab hào quang từ Inspector
-    private GameObject activeAura;  // Hào quang đang active
-    // Biến để kiểm tra trạng thái tấn công
+    [SerializeField] private GameObject auraPrefab;
+    private GameObject activeAura;
     private bool isAttacking = false;
 
-    // --- THÊM DÒNG NÀY ---
-    [SerializeField] private GameObject attackHitbox; // Kéo GameObject AttackHitbox của bạn vào đây từ Inspector
+    [SerializeField] private GameObject attackHitbox;
 
     private float lastHitTime = -999f;
     [SerializeField] private float hitCooldown = 0.5f;
@@ -58,7 +55,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] public SwordSpin swordSpin;
     [SerializeField] public FireballDamage fireBall;
-
 
     [SerializeField] private GameObject circleEffectPrefab;
     private GameObject currentCircleEffect;
@@ -79,6 +75,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private AudioClip fireballShootClip;
 
+    // === GOD MODE ===
+    [HideInInspector] private bool isGodMode = false;
 
     private void Awake()
     {
@@ -90,7 +88,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         ultimateCanvas.enabled = false;
-
 
         level = PlayerState.Level;
         maxHp = PlayerState.MaxHp;
@@ -112,13 +109,11 @@ public class PlayerController : MonoBehaviour
         UpdateExpBar();
         gameManager.UpdateLevelUI(level);
 
-        // --- TẮT HITBOX KHI BẮT ĐẦU GAME (Nếu bạn chưa tắt nó trong Editor) ---
         if (attackHitbox != null)
         {
             attackHitbox.SetActive(false);
         }
 
-        
         if (PlayerState.acquiredFireball && PlayerState.savedFireballPrefab != null)
         {
             SetFireballPrefab(PlayerState.savedFireballPrefab);
@@ -132,25 +127,26 @@ public class PlayerController : MonoBehaviour
 
     public void ActivateAura(GameObject auraPrefab)
     {
-        if (auraPrefab != null && activeAura == null)  // Chỉ tạo 1 lần
+        if (auraPrefab != null)
         {
-            activeAura = Instantiate(auraPrefab, transform.position, Quaternion.identity);
-            activeAura.transform.SetParent(transform);  // Gắn theo Player
-            activeAura.transform.localPosition = Vector3.zero;  // Ở giữa Player
-            Debug.Log("Hào quang đã được kích hoạt!");
+            Instantiate(auraPrefab, transform.position, Quaternion.identity, transform);
         }
     }
-
     void Update()
     {
+        // === GOD MODE TOGGLE ===
+        if (Input.GetKey(KeyCode.G) && Input.GetKeyDown(KeyCode.M))
+        {
+            isGodMode = !isGodMode;
+            Debug.Log("⚡ GOD MODE: " + (isGodMode ? "ON" : "OFF"));
+        }
+
         UpdateHealthBar();
         UpdateEnergyBar();
         UpdateExpBar();
         gameManager.UpdateLevelUI(level);
         Movement();
-        //currentEnergy = maxEnergy;
-        //UpdateEnergyBar(); //test ultimate
-        // Kiểm tra input tấn công
+
         if (Input.GetKeyDown(KeyCode.Space) && !isAttacking)
         {
             Attack();
@@ -161,7 +157,6 @@ public class PlayerController : MonoBehaviour
         {
             ShowCircleEffect();
             ActivateSwordSpin();
-            //PlayerState.acquiredSwordSpin = false;
         }
 
         if (!isUsingUltimate && Input.GetKeyDown(KeyCode.R) && currentEnergy >= maxEnergy)
@@ -181,65 +176,45 @@ public class PlayerController : MonoBehaviour
     void Movement()
     {
         Vector2 playerInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
         playerInput.Normalize();
 
-        // Chỉ di chuyển khi không tấn công
         if (!isAttacking)
         {
             rb.linearVelocity = playerInput * moveSpeed;
 
-            // Xoay mặt khi move
             if (playerInput.x < 0)
                 spriteRenderer.flipX = true;
             else if (playerInput.x > 0)
                 spriteRenderer.flipX = false;
 
-            //Set animation khi move
-            if (playerInput != Vector2.zero)
-                animator.SetBool("isMove", true); // Điều khiển biến isMove trong Animator
-            else
-                animator.SetBool("isMove", false); // Điều khiển biến isMove trong Animator
+            animator.SetBool("isMove", playerInput != Vector2.zero);
         }
-        else // Khi đang tấn công, dừng di chuyển
+        else
         {
             rb.linearVelocity = Vector2.zero;
-            // Có thể giữ animation idle hoặc animation đang chạy nếu bạn muốn nhân vật vẫn hiển thị tư thế đó khi chém
-            // Tuy nhiên, thường thì khi chém, animation chém sẽ ưu tiên.
         }
     }
 
     void Attack()
     {
-        isAttacking = true; // Đặt cờ đang tấn công là true
-        animator.SetTrigger("Attack"); // Kích hoạt Trigger "AttackTrigger" trong Animator
-                                       // Animator sẽ tự động chọn HeroAtt1 hoặc HeroAtt2 dựa vào điều kiện isMove
+        isAttacking = true;
+        animator.SetTrigger("Attack");
         if (audioSource != null && attackClip != null)
         {
             audioSource.PlayOneShot(attackClip);
         }
     }
 
-    // Hàm này sẽ được gọi từ Animation Event của cả HeroAtt1 và HeroAtt2
     public void EndAttack()
     {
         isAttacking = false;
-        // Sau khi attack kết thúc, nếu người chơi vẫn giữ phím di chuyển,
-        // hàm Movement() trong Update sẽ tự động đặt lại isMove = true
-        // và nhân vật sẽ quay về HeroRun.
-        // Bạn KHÔNG nên gọi DisableHitbox() ở đây nếu bạn đã đặt nó làm một Animation Event riêng.
-        // Gọi ở đây có thể tắt hitbox quá muộn hoặc không đồng bộ với animation.
     }
 
-    // --- DÁN ĐOẠN CODE NÀY VÀO ĐÂY (ngoài các hàm Start, Update, v.v., nhưng trong class PlayerController) ---
     public void EnableHitbox()
     {
         if (attackHitbox != null)
         {
-            attackHitbox.SetActive(true); // Bật GameObject hitbox
-                                          // Nếu cần, điều chỉnh vị trí và kích thước hitbox tại đây
-                                          // Ví dụ: attackHitbox.transform.localPosition = new Vector3(0.5f, 0, 0); // Di chuyển hitbox tương đối với Player
-                                          // attackHitbox.GetComponent<BoxCollider2D>().size = new Vector2(0.8f, 0.8f); // Thay đổi kích thước collider
+            attackHitbox.SetActive(true);
             Debug.Log("Attack Hitbox: ENABLED!");
         }
         else
@@ -252,7 +227,7 @@ public class PlayerController : MonoBehaviour
     {
         if (attackHitbox != null)
         {
-            attackHitbox.SetActive(false); // Tắt GameObject hitbox
+            attackHitbox.SetActive(false);
             Debug.Log("Attack Hitbox: DISABLED!");
         }
         else
@@ -260,27 +235,30 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("Attack Hitbox is not assigned in PlayerController!");
         }
     }
-    // --- KẾT THÚC DÁN ---
 
     public void TakeDamage(float damage)
     {
-        if (Time.time - lastHitTime < hitCooldown) return; // Nếu chưa đủ thời gian thì bỏ qua
+        if (isGodMode)
+        {
+            Debug.Log("TakeDamage ignored because God Mode is ON");
+            return;
+        }
+
+        if (Time.time - lastHitTime < hitCooldown) return;
 
         lastHitTime = Time.time;
         currentHp -= damage;
         currentHp = Mathf.Max(currentHp, 0);
         UpdateHealthBar();
+
         if (damageTextPrefab != null)
         {
-            Vector3 spawnPos = transform.position + new Vector3(0, 1.2f, 0); // bay lên đầu player
+            Vector3 spawnPos = transform.position + new Vector3(0, 1.2f, 0);
             GameObject textObj = Instantiate(damageTextPrefab, spawnPos, Quaternion.identity);
-
             DamageText dmgText = textObj.GetComponent<DamageText>();
-            if (dmgText != null)
-            {
-                dmgText.SetDamage(damage);
-            }
+            if (dmgText != null) dmgText.SetDamage(damage);
         }
+
         if (currentHp <= 0)
         {
             animator.ResetTrigger("TakeHit");
@@ -381,7 +359,12 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
-        // Kích hoạt animation chết
+        if (isGodMode)
+        {
+            Debug.Log("Die() ignored because God Mode is ON");
+            return;
+        }
+
         animator.SetTrigger("Die");
         if (audioSource != null && deathClip != null)
         {
@@ -389,26 +372,21 @@ public class PlayerController : MonoBehaviour
         }
         animator.SetBool("isDead", true);
 
-        // Ngăn chặn các hành động khác của người chơi sau khi chết
-        // Vô hiệu hóa input hoặc script này
-        enabled = false; // Tắt script này
-        rb.linearVelocity = Vector2.zero; // Dừng mọi chuyển động
+        enabled = false;
+        rb.linearVelocity = Vector2.zero;
 
-        // Vô hiệu hóa collider để không còn va chạm nữa
         Collider2D playerCollider = GetComponent<Collider2D>();
         if (playerCollider != null)
         {
             playerCollider.enabled = false;
         }
 
-        // Tắt hitbox tấn công nếu nó đang bật
         if (attackHitbox != null && attackHitbox.activeSelf)
         {
             attackHitbox.SetActive(false);
         }
 
-        Destroy(gameObject, 3f); // Hủy sau 2 giây (đảm bảo animation có thời gian để phát)
-
+        Destroy(gameObject, 3f);
         Invoke(nameof(HandleDeath), 2f);
     }
 
@@ -416,7 +394,6 @@ public class PlayerController : MonoBehaviour
     {
         gameManager.Dead();
     }
-
 
     public void SetFireballPrefab(GameObject prefab)
     {
@@ -432,7 +409,6 @@ public class PlayerController : MonoBehaviour
 
         GameObject fireball = Instantiate(fireballPrefab, fireballSpawnPoint.position, Quaternion.identity);
 
-        // Xoay đầu đạn về đúng hướng:
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         fireball.transform.rotation = Quaternion.Euler(0, 0, angle);
 
@@ -453,6 +429,7 @@ public class PlayerController : MonoBehaviour
     {
         return currentEnergy;
     }
+
     private IEnumerator UseUltimate()
     {
         isUsingUltimate = true;
@@ -475,29 +452,15 @@ public class PlayerController : MonoBehaviour
             {
                 audioSource.PlayOneShot(ultiClip);
             }
-            Debug.Log("Ultimate video started playing");
-        }
-        else
-        {
-            Debug.LogWarning("Ultimate video player or clip is not set!");
         }
 
         Time.timeScale = ultimateTimeScale;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
-
         yield return new WaitForSecondsRealtime(ultimateDuration);
 
-        if (ultimateVideoPlayer != null)
-        {
-            ultimateVideoPlayer.Stop();
-        }
-
-        if (ultimateCanvas != null)
-        {
-            ultimateCanvas.enabled = false;
-            Debug.Log("Ultimate canvas disabled");
-        }
+        if (ultimateVideoPlayer != null) ultimateVideoPlayer.Stop();
+        if (ultimateCanvas != null) ultimateCanvas.enabled = false;
 
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
@@ -518,6 +481,7 @@ public class PlayerController : MonoBehaviour
 
         isUsingUltimate = false;
     }
+
     public void ShowCircleEffect()
     {
         if (circleEffectPrefab == null) return;
@@ -525,11 +489,12 @@ public class PlayerController : MonoBehaviour
         if (currentCircleEffect == null)
         {
             currentCircleEffect = Instantiate(circleEffectPrefab, transform.position, Quaternion.identity);
-            currentCircleEffect.transform.SetParent(transform); // Gắn vòng tròn vào Player
-            currentCircleEffect.transform.localPosition = new Vector3(0, -0.7f, 0); // điều chỉnh xuống chân
+            currentCircleEffect.transform.SetParent(transform);
+            currentCircleEffect.transform.localPosition = new Vector3(0, -0.7f, 0);
         }
     }
-    float fireRate = 0.5f;  // Tốc độ bắn (0.5s/viên)
+
+    float fireRate = 0.5f;
     float nextFireTime = 0f;
 
     void AutoShootFireball()
@@ -542,20 +507,21 @@ public class PlayerController : MonoBehaviour
             nextFireTime = Time.time + fireRate;
         }
     }
-    //public void ApplyPoison(float damagePerSecond, float duration)
-    //{
-    //    poisonDamagePerSecond = damagePerSecond;
-    //    poisonTimer = duration;
-    //    isPoisoned = true;
-    //    Debug.Log("Player bị dính độc!");
-    //}
+
     public void ApplyPoison(int damagePerSecond, float duration)
     {
+        if (isGodMode)
+        {
+            Debug.Log("Poison ignored because God Mode is ON");
+            return;
+        }
+
         if (poisonCoroutine != null)
             StopCoroutine(poisonCoroutine);
 
         poisonCoroutine = StartCoroutine(PoisonEffect(damagePerSecond, duration));
     }
+
     private IEnumerator PoisonEffect(int damagePerSecond, float duration)
     {
         float elapsed = 0f;
@@ -572,9 +538,10 @@ public class PlayerController : MonoBehaviour
         poisonCoroutine = null;
         Debug.Log("Hết hiệu ứng độc.");
     }
+
     public void ActivateSwordSpin()
     {
-        if (hasSwordSpin) return; // Không cho kích hoạt lại nếu đã có
+        if (hasSwordSpin) return;
 
         hasSwordSpin = true;
         int swordCount = 3;
@@ -582,7 +549,7 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < swordCount; i++)
         {
             GameObject sword = Instantiate(swordSpinPrefab, spinCenter.position, Quaternion.identity);
-            sword.transform.SetParent(spinCenter); // quay quanh player
+            sword.transform.SetParent(spinCenter);
             SwordSpin spin = sword.GetComponent<SwordSpin>();
             spin.ownerTag = "Player";
             spin.bossCenter = spinCenter;

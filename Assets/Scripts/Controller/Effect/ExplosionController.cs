@@ -4,7 +4,7 @@ public class ExplosionController : MonoBehaviour
 {
 	[SerializeField] private float damage = 30f;
 	// --- THÊM BI?N CHO L?C ??Y LÙI C?A V? N? ---
-	[SerializeField] private float explosionKnockbackForce = 10f; // L?c ??y lùi khi b? n?
+	[SerializeField] private float explosionKnockbackForce = 10f; 
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{

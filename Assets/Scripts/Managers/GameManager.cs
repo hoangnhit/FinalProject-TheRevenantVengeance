@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
 
     private void MuteAllAudioSources()
     {
-        AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
+        AudioSource[] allAudioSources = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
         foreach (AudioSource src in allAudioSources)
         {
             src.mute = true;
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
 
     private void UnmuteAllAudioSources()
     {
-        AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
+        AudioSource[] allAudioSources = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
         foreach (AudioSource src in allAudioSources)
         {
             src.mute = false;
