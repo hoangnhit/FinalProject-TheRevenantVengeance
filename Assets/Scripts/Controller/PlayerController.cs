@@ -132,6 +132,7 @@ public class PlayerController : MonoBehaviour
             Instantiate(auraPrefab, transform.position, Quaternion.identity, transform);
         }
     }
+
     void Update()
     {
         // === GOD MODE TOGGLE ===
@@ -139,6 +140,14 @@ public class PlayerController : MonoBehaviour
         {
             isGodMode = !isGodMode;
             Debug.Log("⚡ GOD MODE: " + (isGodMode ? "ON" : "OFF"));
+        }
+
+        // === FULL ENERGY CHEAT (F + E) ===
+        if (Input.GetKey(KeyCode.F) && Input.GetKeyDown(KeyCode.E))
+        {
+            currentEnergy = maxEnergy;
+            UpdateEnergyBar();
+            Debug.Log("⚡ FULL ENERGY ACTIVATED!");
         }
 
         UpdateHealthBar();
