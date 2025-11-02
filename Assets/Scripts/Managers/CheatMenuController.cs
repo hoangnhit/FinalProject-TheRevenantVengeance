@@ -23,7 +23,7 @@ public class CheatMenuController : MonoBehaviour
     public void CheckCheatGame()
     {
         string cheatCode = cheatInputField.text.Trim().ToLower();
-        if (cheatCode == "godmode" || cheatCode == "kietoccho")
+        if (cheatCode == "godmode" || cheatCode == "thitduongtang")
         {
             if (playerController != null)
             {
