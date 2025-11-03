@@ -46,6 +46,6 @@ For the first time in countless moons, his soul knows peace.
 Justice has been done. And so… he is free.
 
 🎧 Record: (https://hoangnhit.itch.io/the-revenants-vengeance?secret=URe3PqvwHneOGuTtWHrcZLEGUk)
- Deloy:
+Deloy:
 📅 Project: Final Project – FPT University
 🏫 Course: PRU213 – Game Development
