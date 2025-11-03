@@ -21,6 +21,44 @@
 🔊 Audacity / Freesound – Sound editing & effects
 
 💾 C# – Game logic and system scripting
+----
+
+🎮 Controls — Điều khiển (Default)
+
+> W / A / S / D — Di chuyển (Move).
+
+> SPACE — Tấn công (Attack / Primary).
+
+> R — Kỹ năng / Ultimate (Use ultimate when energy is full).
+
+> P — Pause Menu.
+
+HUD icons: ❤ Heart (HP), 🔷 Energy, ♦ Exp.
+
+----
+
+🔐 Cheats (DEV / Testing Only) — Hướng dẫn cheat & console
+
+1) Phím tắt nhanh
+
+> F + E — Full Energy (đầy thanh Energy).
+
+> G + M — Toggle Invincible (bất tử bật/tắt).
+
+> G giữ + M nhấn để bật/tắt.
+
+2) Console commands (Mở console bằng ~ / BackQuote)
+
+Mở console nhỏ (press ~) → gõ lệnh → Enter hoặc bấm Run.
+
+Hỗ trợ các lệnh:
+
+> godmode — Bật GodMode (tăng level ->>> tăng tốc độ di chuyển, tần suất tấn công)
+
+> godmode off — Tắt GodMode và restore về giá trị ban đầu (level 1, speed mặc định, attack mặc định, invincible false).
+
+
+------
 
 ## 🌑 Story Introduction  
 
@@ -37,7 +75,7 @@ For vengeance never truly dies.
 ## ⚔️ Game Progression  
 
 The game unfolds through **three main levels**, each with increasing intensity.  
-Below is the full **level structure (Cấu trúc màn chơi)** with translated narrative highlights in both English and Vietnamese.
+Below is the full **level structure (Cấu trúc màn chơi)** .
 
 ---
 
@@ -150,5 +188,3 @@ All game assets, code, and design were created by **Team 7 – FPT University**
 Special thanks to our lecturers and testers for their guidance and feedback.  
 
 ---
-
-⭐ *“Not as a demon, nor as a savior — but as a memory.”*  
