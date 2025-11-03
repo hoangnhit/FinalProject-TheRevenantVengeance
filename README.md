@@ -14,6 +14,14 @@
 
 ---
 
+🧱 Technologies Used
+
+🧩 Unity Engine (Version 6000.2.7f2 LTS) – Core development platform
+
+🔊 Audacity / Freesound – Sound editing & effects
+
+💾 C# – Game logic and system scripting
+
 ## 🌑 Story Introduction  
 
 When the **Black Dragon** fell from the heavens, its flames consumed kingdoms and left nothing but ash.  
