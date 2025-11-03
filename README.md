@@ -1,51 +1,146 @@
-# FinalProject-TheRevenantVengeance🎮 The Revenant’s Vengeance
+# 🎮 FinalProject – The Revenant’s Vengeance  
 
-Developed by FPT University Students
+> Developed by **FPT University Students**  
+> Course: **PRU213 – Game Development**
 
-👥 Team Members
-| Name             | ID       |
-| ---------------- | -------- |
-| Nguyễn Hữu Hoàng | SE170060 |
-| Ngô Gia Bảo      | SE181581 |
+---
 
-🌑 Story Introduction
+## 👥 Team Members  
 
-When the Black Dragon fell from the heavens, its flames consumed kingdoms and left nothing but ash.
-No savior rose—only one silent warrior stood against the darkness.
+| Name             | Student ID |
+| ---------------- | ----------- |
+| Nguyễn Hữu Hoàng | SE170060    |
+| Ngô Gia Bảo      | SE181581    |
 
-He sought neither glory nor crown, only an end to the world’s torment.
-Through endless battles, he struck down the beast… but at a heavy price.
+---
 
-The world was saved—
-yet hope, as always, is fickle.
-For vengeance never truly dies.
+## 🌑 Story Introduction  
 
-⚔️ Game Progression
+When the **Black Dragon** fell from the heavens, its flames consumed kingdoms and left nothing but ash.  
+No savior rose — only one silent warrior stood against the darkness.  
 
-The game unfolds through three main levels, each with three stages of increasing intensity:
+He sought neither glory nor crown, only an end to the world’s torment.  
+Through endless battles, he struck down the beast… but at a heavy price.  
 
-1️⃣ Level 1 – The Grave Wood
+The world was saved — yet hope, as always, is fickle.  
+For vengeance never truly dies.  
 
-The cursed forest whispers of betrayal and forgotten heroes.
+---
+## ⚔️ Game Progression  
 
-2️⃣ Level 2 – The Forsaken Citadel
+The game unfolds through **three main levels**, each with increasing intensity.  
+Below is the full **level structure (Cấu trúc màn chơi)** with translated narrative highlights in both English and Vietnamese.
 
-A once proud kingdom now haunted by its own sins.
+---
 
-3️⃣ Level 3 – The Abyss of Fire
+### 🌲 Level I – *The Grave Wood*  
 
-Beneath the world, the heart of the fallen dragon still burns — and the final reckoning awaits.
+#### 🩸 Stage 1 – *Whispers of the Dead*  
+> “The roots remember.”  
+> *Khu rừng u ám vang lên những lời thì thầm của linh hồn bị phản bội.*
 
-🔥 Story Ending
+The cursed forest whispers tales of betrayal and forgotten heroes.
 
-As the final scream fades and the fires die, he stands alone atop the ruins.
-Not as a demon, nor as a savior — but as a memory.
-The chains of vengeance fall away; the rage melts into light.
+---
 
-For the first time in countless moons, his soul knows peace.
-Justice has been done. And so… he is free.
+#### 🌫️ Stage 2 – *Eyes in the Mist*  
+> “The veil grows thin.”  
+> *Bóng ma và ký ức hòa quyện, thử thách lòng kiên định của người chơi.*
 
-🎧 Record: (https://hoangnhit.itch.io/the-revenants-vengeance?secret=URe3PqvwHneOGuTtWHrcZLEGUk)
-Deloy:
-📅 Project: Final Project – FPT University
-🏫 Course: PRU213 – Game Development
+Shadows and memories intertwine, testing the resolve of the silent warrior.
+
+---
+
+#### 💀 Boss – *Gravewarden Defeated*  
+> “The gatekeeper falls. The way forward opens — not into light, but into the world that forgot.”  
+
+The forest’s guardian crumbles, revealing a path not of salvation, but of remembrance.
+
+---
+
+### ⚔️ Level II – *The Hunt of Man*  
+
+#### 🌾 Stage 1 – *Ambush in the Wilds*  
+> “Coins clink louder than conscience.”  
+> *Kẻ từng là người, giờ thành thợ săn, tìm cách kết liễu anh một lần nữa.*
+
+The hunter becomes the hunted as old comrades return for blood.
+
+---
+
+#### ⚰️ Boss – *Lightbearer Defeated*  
+> “Forgive me,” the once-friend whispers.  
+> *Nhưng kẻ báo thù không cần tha thứ.*
+
+Mercy is but a forgotten word in the hunt for vengeance.
+
+---
+
+### 🏰 Level III – *Castle of Crimson*  
+
+#### 🛡️ Stage 1 – *Thronewatch*  
+> “Gold-plated justice cracks under blood-soaked truth.”  
+> *Lâu đài của kẻ thống trị thấm đẫm tội lỗi và máu của những người trung thành.*
+
+Within gilded halls, betrayal echoes louder than victory.
+
+---
+
+#### 👑 Final Boss – *The Crimson King*  
+> He sits upon the iron throne, bathed in blood-red light — where destiny is reborn.  
+> *Hắn ngồi trên ngai sắt, giữa ánh sáng đỏ như máu — nơi định mệnh được tái sinh.*
+
+The final reckoning begins; vengeance finds its true end.
+
+---
+
+
+## 🔥 Story Ending  
+
+As the final scream fades and the fires die, he stands alone atop the ruins.  
+Not as a demon, nor as a savior — but as a **memory**.  
+
+The chains of vengeance fall away; the rage melts into light.  
+For the first time in countless moons, his soul knows peace.  
+
+**Justice has been done. And so… he is free.**  
+
+---
+
+## 🧱 Technologies Used  
+
+- 🧩 **Unity Engine** – Game development framework  
+- 🎨 **Aseprite / Photoshop** – Sprite & texture design  
+- 🔊 **Audacity / Freesound** – Audio and sound effects  
+- 💾 **C#** – Core programming language  
+
+---
+
+## 🎧 Record  
+
+📹 [**Watch the Gameplay Recording on Google Drive**](https://drive.google.com/file/d/1BIEJ5z1z6_a0Yx9lXqZWK58u6nx1uuLA/view?pli=1)
+
+---
+
+## 🚀 Play the Game  
+
+🎮 [**Play on itch.io**](https://b-baocode.itch.io/finalproject)
+
+---
+
+## 🏫 Project Information  
+
+- **Project Type:** Final Project – FPT University  
+- **Course:** PRU213 – Game Development  
+- **Semester:** 2025  
+
+---
+
+## 💬 Credits  
+
+All game assets, code, and design were created by **Team 7 – FPT University**  
+Special thanks to our lecturers and testers for their guidance and feedback.  
+
+---
+
+⭐ *“Not as a demon, nor as a savior — but as a memory.”*  
